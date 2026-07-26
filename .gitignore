@@ -1,17 +1,26 @@
-# Build outputs
-[Bb]in/
-[Oo]bj/
+# .NET
+**/bin/
+**/obj/
 
 # Visual Studio
 .vs/
 
-# User-specific files
-*.user
-*.suo
+# Rider
+.idea/
 
-# Test results
-TestResults/
+# VS Code
+.vscode/
 
-# NuGet
-*.nupkg
-*.snupkg
+# Node (futuro)
+node_modules/
+
+# Logs
+*.log
+
+# Environment
+.env
+.env.*
+
+# OS
+.DS_Store
+Thumbs.db

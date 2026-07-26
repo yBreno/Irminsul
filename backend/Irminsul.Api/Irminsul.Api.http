@@ -1,0 +1,6 @@
+@Irminsul.Api_HostAddress = http://localhost:5224
+
+GET {{Irminsul.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="Irminsul.Api/Irminsul.Api.csproj" Id="fd1816b7-be59-496a-b663-d8a5a0ae7941" />
+  <Project Path="Irminsul.Application/Irminsul.Application.csproj" Id="5d5bb2d3-8d01-4166-9055-ea12314b7a87" />
+  <Project Path="Irminsul.Domain/Irminsul.Domain.csproj" Id="5328a37a-448a-4273-9dcc-1d9c05e3f045" />
+  <Project Path="Irminsul.Infrastructure/Irminsul.Infrastructure.csproj" Id="4ae12d95-58e6-4fcd-b244-4b99b1542a80" />
+  <Project Path="Irminsul.Tests/Irminsul.Tests.csproj" Id="6c2339cd-e06f-432b-b721-312cd751008e" />
+</Solution>

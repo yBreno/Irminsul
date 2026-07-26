@@ -1,0 +1,4 @@
+dotnet ef migrations add InitialCreate --project Irminsul.Infrastructure --startup-project Irminsul.Api 
+Dentro do Backend
+
+dotnet ef database update --project Irminsul.Infrastructure --startup-project Irminsul.Api 

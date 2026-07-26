@@ -1,0 +1,50 @@
+| Projeto                 | Tipo de projeto      | Responsabilidade              |
+| ----------------------- | -------------------- | ----------------------------- |
+| Irminsul.Api            | ASP.NET Core Web API | Receber requisições HTTP      |
+| Irminsul.Application    | Class Library        | Casos de uso da aplicação     |
+| Irminsul.Domain         | Class Library        | Entidades e regras de domínio |
+| Irminsul.Infrastructure | Class Library        | Banco de dados e tecnologias  |
+| Irminsul.Tests          | xUnit Test Project   | Testes                        |
+
+
+Referencias:
+
+Irminsul.Domain não conhece ninguém, ele não precisa
+.Application conhece Domain
+.Infrastructure conhece Domain
+.Api cohece aplication e infrastructre
+
+               Irminsul.Api
+                 /       \
+                /         \
+      Application     Infrastructure
+               \         /
+                \       /
+             Irminsul.Domain
+
+API
+
+↓
+
+Application
+
+↓
+
+Infrastructure
+
+↓
+
+SQL Server
+
+
+
+Irminsul.APi
+Pacotes -
+EntityFramewrk.Design
+EntityFramwrok.SqlServer
+swashblucke.swaggergen /  Swagger / Swaggerui
+
+Irminsul.Infrastructure
+EntityFramewrk.Design
+EntityFramwrok.SqlServer
+
