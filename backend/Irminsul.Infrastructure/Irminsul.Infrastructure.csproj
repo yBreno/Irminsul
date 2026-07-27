@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Irminsul.Application\Irminsul.Application.csproj" />
     <ProjectReference Include="..\Irminsul.Domain\Irminsul.Domain.csproj" />
   </ItemGroup>
 

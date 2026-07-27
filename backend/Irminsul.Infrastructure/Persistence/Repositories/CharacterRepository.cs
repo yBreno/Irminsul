@@ -1,9 +1,9 @@
-﻿using Irminsul.Application.Interfaces;
-using Irminsul.Domain.Entities;
+﻿using Irminsul.Domain.Entities;
 using Irminsul.Infrastructure.Persistence.Context;
 using System;
 using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore
+using Microsoft.EntityFrameworkCore;
+using Irminsul.Application.Interfaces;
 
 namespace Irminsul.Infrastructure.Persistence.Repositories
 {

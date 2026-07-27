@@ -24,5 +24,7 @@ namespace Irminsul.Application.Services
         {
             return await _characterRepository.GetByIdAsync(id);
         }
+
+
     }
 }

@@ -1,5 +1,8 @@
+using Irminsul.Application.Services;
 using Irminsul.Infrastructure.Persistence.Context;
+using Irminsul.Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Irminsul.Application.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +15,9 @@ builder.Services.AddControllers();
 // builder.Services.AddOpenApi();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddScoped<ICharacterRepository, CharacterRepository>();
+builder.Services.AddScoped<CharacterService>();
 
 var app = builder.Build();
 
