@@ -48,3 +48,25 @@ Irminsul.Infrastructure
 EntityFramewrk.Design
 EntityFramwrok.SqlServer
 
+
+conventional commits:
+feat: nova funcionalidade
+
+fix: correção de bug
+
+refactor: melhoria sem alterar comportamento
+
+test: testes
+
+docs: documentação
+
+style: formatação
+
+chore: configuração
+
+build: alterações de build
+
+ci: GitHub Actions
+
+perf: melhoria de performance
+

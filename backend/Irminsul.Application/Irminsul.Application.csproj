@@ -10,4 +10,8 @@
     <ProjectReference Include="..\Irminsul.Domain\Irminsul.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DTos\" />
+  </ItemGroup>
+
 </Project>
