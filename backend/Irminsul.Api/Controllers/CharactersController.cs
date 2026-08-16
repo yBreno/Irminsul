@@ -1,8 +1,11 @@
-﻿using Irminsul.Application.Services;
+﻿using FluentValidation;
+using Irminsul.Application.DTos.Characters;
+using Irminsul.Application.Services;
 using Irminsul.Domain.Entities;
+using Irminsul.Domain.Enums;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Irminsul.Domain.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace Irminsul.Api.Controllers
 {
@@ -12,10 +15,13 @@ namespace Irminsul.Api.Controllers
     {
 
         private readonly CharacterService _characterService;
+        private readonly IValidator<CreateCharacterDto> _validator;
 
-        public CharactersController(CharacterService characterService)
+        public CharactersController(CharacterService characterService, IValidator<CreateCharacterDto> validator)
         {
             _characterService = characterService;
+            _validator = validator;
+
         }
 
         //Lista de todos os personagens
@@ -46,22 +52,19 @@ namespace Irminsul.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateCharacter([FromBody] Character character)
+        public async Task<IActionResult> CreateCharacter(CreateCharacterDto character)
         {
-            var createdCharacter = await _characterService.CreateCharacterAsync(
-                character.Name,
-                character.Title,
-                character.Rarity,
-                character.Vision,
-                character.WeaponType,
-                character.Nation,
-                character.ImageUrl,
-                character.Description,
-                character.Lore
-            );
+            var validationResult = await _validator.ValidateAsync(character);
+            if (!validationResult.IsValid)
+            {
+                return BadRequest(validationResult.Errors);
+            }
+
+            var createdCharacter = await _characterService.CreateCharacterAsync(character);
 
             return CreatedAtAction(nameof(GetCharacterById), new { id = createdCharacter.Id }, createdCharacter);
         }
 
     }
+               
 }

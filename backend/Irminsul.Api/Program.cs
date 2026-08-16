@@ -3,6 +3,7 @@ using Irminsul.Infrastructure.Persistence.Context;
 using Irminsul.Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Irminsul.Application.Interfaces;
+using Irminsul.Api.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +19,9 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<ICharacterRepository, CharacterRepository>();
 builder.Services.AddScoped<CharacterService>();
+
+builder.Services.AddApplicationValidation();
+
 
 var app = builder.Build();
 
