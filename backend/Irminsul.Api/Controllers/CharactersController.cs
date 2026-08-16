@@ -2,6 +2,7 @@
 using Irminsul.Domain.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Irminsul.Domain.Enums;
 
 namespace Irminsul.Api.Controllers
 {
@@ -30,6 +31,7 @@ namespace Irminsul.Api.Controllers
             return Ok(characters);
         }
 
+        //Lista personagem por ID
         [HttpGet("characters/{id}")]
         public async Task<IActionResult> GetCharacterById (Guid id)
         {
@@ -43,6 +45,23 @@ namespace Irminsul.Api.Controllers
             return Ok(characters);
         }
 
-        //Futuro: Adicionar rotas exclusivas para Artefatos, Armas e Elementos
+        [HttpPost]
+        public async Task<IActionResult> CreateCharacter([FromBody] Character character)
+        {
+            var createdCharacter = await _characterService.CreateCharacterAsync(
+                character.Name,
+                character.Title,
+                character.Rarity,
+                character.Vision,
+                character.WeaponType,
+                character.Nation,
+                character.ImageUrl,
+                character.Description,
+                character.Lore
+            );
+
+            return CreatedAtAction(nameof(GetCharacterById), new { id = createdCharacter.Id }, createdCharacter);
+        }
+
     }
 }

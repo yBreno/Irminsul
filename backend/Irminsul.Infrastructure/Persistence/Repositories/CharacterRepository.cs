@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Irminsul.Application.Interfaces;
+using System.Runtime.CompilerServices;
 
 namespace Irminsul.Infrastructure.Persistence.Repositories
 {
@@ -25,6 +26,13 @@ namespace Irminsul.Infrastructure.Persistence.Repositories
         public async Task<Character?> GetByIdAsync(Guid id)
         {
             return await _context.Characters.FirstOrDefaultAsync(c => c.Id == id);
+        }
+
+        public async Task<Character> AddAsync(Character character)
+        {
+            _context.Characters.Add(character);
+            await _context.SaveChangesAsync();
+            return character;
         }
 
         

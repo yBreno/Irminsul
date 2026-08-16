@@ -21,6 +21,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Irminsul.Application\Irminsul.Application.csproj" />
     <ProjectReference Include="..\Irminsul.Infrastructure\Irminsul.Infrastructure.csproj" />
+	<ProjectReference Include="..\Irminsul.Domain\Irminsul.Domain.csproj" />
   </ItemGroup>
 
 </Project>

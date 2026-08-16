@@ -7,12 +7,12 @@ namespace Irminsul.Domain.Entities
 {
     public class Character
     {
-        public Character(string name, string title, CharacterRarity characterRarity, Vision vision, WeaponType weaponType, Nation nation, string imageUrl, string description, string lore)
+        public Character(string name, string title, CharacterRarity rarity, Vision vision, WeaponType weaponType, Nation nation, string imageUrl, string description, string lore)
         {
             Id = Guid.NewGuid();
             Name = name;
             Title = title;
-            Rarity = characterRarity;
+            Rarity = rarity;
             Vision = vision;
             WeaponType = weaponType;
             Nation = nation;
