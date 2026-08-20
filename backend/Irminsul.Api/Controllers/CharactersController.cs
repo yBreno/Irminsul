@@ -84,6 +84,17 @@ namespace Irminsul.Api.Controllers
             }
             return Ok(updatedCharacter);
         }
+
+        [HttpDelete("characters/{id}")]
+        public async Task<IActionResult> DeleteCharacter(Guid id)
+        {
+            var deletedCharacter = await _characterService.DeleteCharacterAsync(id);
+            if (deletedCharacter == null)
+            {
+                return NotFound();
+            }
+            return Ok(deletedCharacter);
+        }
     }
                
 }

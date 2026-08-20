@@ -45,5 +45,15 @@ namespace Irminsul.Application.Services
             return await _characterRepository.UpdateAsync(existingCharacter);
         }
 
+        public async Task<Character> DeleteCharacterAsync(Guid id)
+        {
+            var existingCharacter = await _characterRepository.GetByIdAsync(id);
+            if (existingCharacter == null)
+            {
+                return null;
+            }
+            return await _characterRepository.DeleteAsync(id);
+        }
+
     }
 }

@@ -46,5 +46,15 @@ namespace Irminsul.Infrastructure.Persistence.Repositories
             await _context.SaveChangesAsync();
             return existingCharacter;
         }
+
+        public async Task<Character> DeleteAsync(Guid id)
+        {
+            var existingCharacter = await _context.Characters.FindAsync(id);
+
+            _context.Characters.Remove(existingCharacter!);
+            await _context.SaveChangesAsync();
+
+            return existingCharacter!;
+        }
     }
 }
