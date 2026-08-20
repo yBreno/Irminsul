@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using Irminsul.Domain.Enums;
 using Irminsul.Application.DTos.Characters;
+using Irminsul.Application.Exceptions;
 
 namespace Irminsul.Application.Services
 {
@@ -39,7 +40,7 @@ namespace Irminsul.Application.Services
             var existingCharacter = await _characterRepository.GetByIdAsync(id);
             if (existingCharacter == null)
             {
-                throw new Exception("Personagem não encontrado.");
+                throw new CharacterNotFoundException();
             }
             existingCharacter.Update(dto.name, dto.title, dto.rarity, dto.vision, dto.weaponType, dto.nation, dto.imageUrl, dto.description, dto.lore);
             return await _characterRepository.UpdateAsync(existingCharacter);
@@ -50,7 +51,7 @@ namespace Irminsul.Application.Services
             var existingCharacter = await _characterRepository.GetByIdAsync(id);
             if (existingCharacter == null)
             {
-                return null;
+                throw new CharacterNotFoundException();
             }
             return await _characterRepository.DeleteAsync(id);
         }

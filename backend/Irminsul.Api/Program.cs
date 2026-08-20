@@ -1,9 +1,10 @@
+using Irminsul.Api.Extensions;
+using Irminsul.Api.Middleware;
+using Irminsul.Application.Interfaces;
 using Irminsul.Application.Services;
 using Irminsul.Infrastructure.Persistence.Context;
 using Irminsul.Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
-using Irminsul.Application.Interfaces;
-using Irminsul.Api.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +25,7 @@ builder.Services.AddApplicationValidation();
 
 
 var app = builder.Build();
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

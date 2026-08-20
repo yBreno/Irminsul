@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using Irminsul.Application.DTos.Characters;
+using Irminsul.Application.Exceptions;
 using Irminsul.Application.Services;
 using Irminsul.Domain.Entities;
 using Irminsul.Domain.Enums;
@@ -45,11 +46,7 @@ namespace Irminsul.Api.Controllers
         public async Task<IActionResult> GetCharacterById (Guid id)
         {
             var characters = await _characterService.GetCharacterByIdAsync(id);
-            
-            if (characters == null)
-            {
-                return NotFound();
-            }
+          
 
             return Ok(characters);
         }
@@ -78,10 +75,7 @@ namespace Irminsul.Api.Controllers
             }
 
             var updatedCharacter = await _characterService.UpdateCharacterAsync(id, character);
-            if (updatedCharacter == null)
-            {
-                return NotFound();
-            }
+            
             return Ok(updatedCharacter);
         }
 
@@ -89,10 +83,7 @@ namespace Irminsul.Api.Controllers
         public async Task<IActionResult> DeleteCharacter(Guid id)
         {
             var deletedCharacter = await _characterService.DeleteCharacterAsync(id);
-            if (deletedCharacter == null)
-            {
-                return NotFound();
-            }
+            
             return Ok(deletedCharacter);
         }
     }
