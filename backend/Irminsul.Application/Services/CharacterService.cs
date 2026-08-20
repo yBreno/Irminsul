@@ -34,5 +34,16 @@ namespace Irminsul.Application.Services
             return await _characterRepository.AddAsync(character);
         }
 
+        public async Task<Character> UpdateCharacterAsync(Guid id, UpdateCharacterDto dto)
+        {
+            var existingCharacter = await _characterRepository.GetByIdAsync(id);
+            if (existingCharacter == null)
+            {
+                throw new Exception("Personagem não encontrado.");
+            }
+            existingCharacter.Update(dto.name, dto.title, dto.rarity, dto.vision, dto.weaponType, dto.nation, dto.imageUrl, dto.description, dto.lore);
+            return await _characterRepository.UpdateAsync(existingCharacter);
+        }
+
     }
 }

@@ -35,6 +35,16 @@ namespace Irminsul.Infrastructure.Persistence.Repositories
             return character;
         }
 
-        
+        public async Task<Character> UpdateAsync(Character character)
+        {
+            var existingCharacter = await _context.Characters.FindAsync(character.Id);
+            if (existingCharacter == null)
+            {
+                throw new Exception("Personagem não encontrado.");
+            }
+            existingCharacter.Update(character.Name, character.Title, character.Rarity, character.Vision, character.WeaponType, character.Nation, character.ImageUrl, character.Description, character.Lore);
+            await _context.SaveChangesAsync();
+            return existingCharacter;
+        }
     }
 }

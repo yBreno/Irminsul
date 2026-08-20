@@ -6,6 +6,7 @@ using Irminsul.Domain.Enums;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
+using System.Runtime.CompilerServices;
 
 namespace Irminsul.Api.Controllers
 {
@@ -16,11 +17,13 @@ namespace Irminsul.Api.Controllers
 
         private readonly CharacterService _characterService;
         private readonly IValidator<CreateCharacterDto> _validator;
+        private readonly IValidator<UpdateCharacterDto> _updateValidator;
 
-        public CharactersController(CharacterService characterService, IValidator<CreateCharacterDto> validator)
+        public CharactersController(CharacterService characterService, IValidator<CreateCharacterDto> validator, IValidator<UpdateCharacterDto> updateValidator)
         {
             _characterService = characterService;
             _validator = validator;
+            _updateValidator = updateValidator;
 
         }
 
@@ -65,6 +68,22 @@ namespace Irminsul.Api.Controllers
             return CreatedAtAction(nameof(GetCharacterById), new { id = createdCharacter.Id }, createdCharacter);
         }
 
+        [HttpPut("characters/{id}")]
+        public async Task<IActionResult> UpdateCharacter(Guid id, UpdateCharacterDto character)
+        {
+            var validationResult = await _updateValidator.ValidateAsync(character);
+            if (!validationResult.IsValid)
+            {
+                return BadRequest(validationResult.Errors);
+            }
+
+            var updatedCharacter = await _characterService.UpdateCharacterAsync(id, character);
+            if (updatedCharacter == null)
+            {
+                return NotFound();
+            }
+            return Ok(updatedCharacter);
+        }
     }
                
 }

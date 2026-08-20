@@ -34,7 +34,19 @@ namespace Irminsul.Domain.Entities
 
         private Character() { }
 
-        
+        public void Update(string name, string title, CharacterRarity rarity, Vision vision, WeaponType weaponType, Nation nation, string imageUrl, string description, string lore)
+        {
+            Name = name;
+            Title = title;
+            Rarity = rarity;
+            Vision = vision;
+            WeaponType = weaponType;
+            Nation = nation;
+            ImageUrl = imageUrl;
+            Description = description;
+            Lore = lore;
+        }
+
     }
     
 }
