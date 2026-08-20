@@ -7,7 +7,7 @@ namespace Irminsul.Domain.Entities
 {
     public class Character
     {
-        public Character(string name, string title, CharacterRarity rarity, Vision vision, WeaponType weaponType, Nation nation, string imageUrl, string description, string lore)
+        public Character(string name, string title, CharacterRarity rarity, Vision vision, WeaponType weaponType, Nation nation, string imageUrl, string description, string? lore)
         {
             Id = Guid.NewGuid();
             Name = name;
@@ -30,11 +30,11 @@ namespace Irminsul.Domain.Entities
         public Nation Nation { get; private set; }
         public string ImageUrl { get; private set; }
         public string Description { get; private set; }
-        public string Lore { get; private set; }
+        public string? Lore { get; private set; }
 
         private Character() { }
 
-        public void Update(string name, string title, CharacterRarity rarity, Vision vision, WeaponType weaponType, Nation nation, string imageUrl, string description, string lore)
+        public void Update(string name, string title, CharacterRarity rarity, Vision vision, WeaponType weaponType, Nation nation, string imageUrl, string description, string? lore)
         {
             Name = name;
             Title = title;

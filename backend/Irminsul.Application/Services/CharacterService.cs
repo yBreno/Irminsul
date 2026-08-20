@@ -25,6 +25,13 @@ namespace Irminsul.Application.Services
 
         public async Task<Character?> GetCharacterByIdAsync(Guid id)
         {
+
+            var character = await _characterRepository.GetByIdAsync(id);
+
+            if (character == null)
+            {
+                throw new CharacterNotFoundException();
+            }
             return await _characterRepository.GetByIdAsync(id);
         }
 

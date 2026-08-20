@@ -7,17 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="DTos\NovaPasta\**" />
-    <EmbeddedResource Remove="DTos\NovaPasta\**" />
-    <None Remove="DTos\NovaPasta\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="FluentValidation" Version="12.1.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Irminsul.Domain\Irminsul.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="DTos\External\" />
   </ItemGroup>
 
 </Project>
