@@ -25,12 +25,11 @@ namespace Irminsul.Api.Controllers
 
 
 
-        public CharactersController(CharacterService characterService, IValidator<CreateCharacterDto> validator, IValidator<UpdateCharacterDto> updateValidator, IGenshinApiClient genshinApiClient)
+        public CharactersController(CharacterService characterService, IValidator<CreateCharacterDto> validator, IValidator<UpdateCharacterDto> updateValidator)
         {
             _characterService = characterService;
             _validator = validator;
             _updateValidator = updateValidator;
-            _genshinApiClient = genshinApiClient;
 
         }
 
@@ -93,17 +92,16 @@ namespace Irminsul.Api.Controllers
             return Ok(deletedCharacter);
         }
 
-        [HttpGet("test/genshin/{name}")]
-        public async Task<IActionResult> TestGenshinApi(string name)
+        [HttpPost("characters/import/{name}")]
+        public async Task<IActionResult> ImportCharacter(string name)
         {
-            var character = await _genshinApiClient.GetCharacterAsync(name);
+            var character = await _characterService
+                .ImportCharacterFromExternalApiAsync(name);
 
-            if (character == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(character);
+            return CreatedAtAction(
+                nameof(GetCharacterById),
+                new { id = character.Id },
+                character);
         }
     }
                

@@ -29,4 +29,14 @@ public class GenshinApiClient : IGenshinApiClient
         return character;
     }
 
+    public async Task<GenshinCharacterImagesDto?> GetCharacterImagesAsync(string name)
+    {
+        var response = await _httpClient.GetAsync(
+            $"api/v5/characters?query={name}");
+        response.EnsureSuccessStatusCode();
+        var characterImages = await response.Content
+            .ReadFromJsonAsync<GenshinCharacterImagesDto>();
+        return characterImages;
+    }
+
 }

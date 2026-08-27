@@ -9,4 +9,5 @@ namespace Irminsul.Application.Interfaces;
 public interface IGenshinApiClient
 {
     Task<GenshinCharacterDto?> GetCharacterAsync(string name);
+    Task<GenshinCharacterImagesDto?> GetCharacterImagesAsync(string name);
 }

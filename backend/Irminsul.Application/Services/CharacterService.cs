@@ -12,10 +12,12 @@ namespace Irminsul.Application.Services
     public class CharacterService
     {
         private readonly ICharacterRepository _characterRepository;
+        private readonly IGenshinApiClient _genshinApiClient;
 
-        public CharacterService(ICharacterRepository characterRepository)
+        public CharacterService(ICharacterRepository characterRepository, IGenshinApiClient genshinApiClient)
         {
             _characterRepository = characterRepository;
+            _genshinApiClient = genshinApiClient;
         }
 
         public async Task<IEnumerable<Character>> GetAllCharactersAsync()
@@ -23,16 +25,16 @@ namespace Irminsul.Application.Services
             return await _characterRepository.GetAllAsync();
         }
 
-        public async Task<Character?> GetCharacterByIdAsync(Guid id)
+        public async Task<Character> GetCharacterByIdAsync(Guid id)
         {
-
             var character = await _characterRepository.GetByIdAsync(id);
 
             if (character == null)
             {
                 throw new CharacterNotFoundException();
             }
-            return await _characterRepository.GetByIdAsync(id);
+
+            return character;
         }
 
         public async Task<Character> CreateCharacterAsync(CreateCharacterDto dto)
@@ -63,5 +65,37 @@ namespace Irminsul.Application.Services
             return await _characterRepository.DeleteAsync(id);
         }
 
+        public async Task<Character> GetCharacterFromExternalApiAsync(string name)
+        {
+            var characterDto = await _genshinApiClient.GetCharacterAsync(name);
+            var characterImagesDto = await _genshinApiClient.GetCharacterImagesAsync(name);
+
+
+            if (characterDto == null)
+            {
+                throw new CharacterNotFoundException();
+            }
+
+            var character = new Character(
+                characterDto.name,
+                characterDto.title,
+                (CharacterRarity)characterDto.rarity,
+                Enum.Parse<Vision>(characterDto.elementText, true),
+                Enum.Parse<WeaponType>(characterDto.weaponText, true),
+                Enum.Parse<Nation>(characterDto.region, true),
+                characterImagesDto?.hoyowiki_icon ?? string.Empty,
+                characterDto.description,
+                string.Empty
+            );
+
+            return character;
+        }
+
+        public async Task<Character> ImportCharacterFromExternalApiAsync(string name)
+        {
+            var character = await GetCharacterFromExternalApiAsync(name);
+
+            return await _characterRepository.AddAsync(character);
+        }
     }
 }
