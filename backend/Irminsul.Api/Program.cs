@@ -2,6 +2,7 @@ using Irminsul.Api.Extensions;
 using Irminsul.Api.Middleware;
 using Irminsul.Application.Interfaces;
 using Irminsul.Application.Services;
+using Irminsul.Infrastructure.External;
 using Irminsul.Infrastructure.Persistence.Context;
 using Irminsul.Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -22,6 +23,11 @@ builder.Services.AddScoped<ICharacterRepository, CharacterRepository>();
 builder.Services.AddScoped<CharacterService>();
 
 builder.Services.AddApplicationValidation();
+
+builder.Services.AddHttpClient<IGenshinApiClient, GenshinApiClient>(client =>
+{
+    client.BaseAddress = new Uri("https://genshin-db-api.vercel.app/");
+});
 
 
 var app = builder.Build();

@@ -1,9 +1,11 @@
 ﻿using FluentValidation;
 using Irminsul.Application.DTos.Characters;
 using Irminsul.Application.Exceptions;
+using Irminsul.Application.Interfaces;
 using Irminsul.Application.Services;
 using Irminsul.Domain.Entities;
 using Irminsul.Domain.Enums;
+using Irminsul.Infrastructure.External;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
@@ -19,12 +21,16 @@ namespace Irminsul.Api.Controllers
         private readonly CharacterService _characterService;
         private readonly IValidator<CreateCharacterDto> _validator;
         private readonly IValidator<UpdateCharacterDto> _updateValidator;
+        private readonly IGenshinApiClient _genshinApiClient;
 
-        public CharactersController(CharacterService characterService, IValidator<CreateCharacterDto> validator, IValidator<UpdateCharacterDto> updateValidator)
+
+
+        public CharactersController(CharacterService characterService, IValidator<CreateCharacterDto> validator, IValidator<UpdateCharacterDto> updateValidator, IGenshinApiClient genshinApiClient)
         {
             _characterService = characterService;
             _validator = validator;
             _updateValidator = updateValidator;
+            _genshinApiClient = genshinApiClient;
 
         }
 
@@ -85,6 +91,19 @@ namespace Irminsul.Api.Controllers
             var deletedCharacter = await _characterService.DeleteCharacterAsync(id);
             
             return Ok(deletedCharacter);
+        }
+
+        [HttpGet("test/genshin/{name}")]
+        public async Task<IActionResult> TestGenshinApi(string name)
+        {
+            var character = await _genshinApiClient.GetCharacterAsync(name);
+
+            if (character == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(character);
         }
     }
                
