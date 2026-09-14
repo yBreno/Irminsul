@@ -6,39 +6,55 @@ using Irminsul.Infrastructure.External;
 using Irminsul.Infrastructure.Persistence.Context;
 using Irminsul.Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddDbContext<IrminsulContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+// Services
 
 builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-// builder.Services.AddOpenApi();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+
+// Database
+
+builder.Services.AddDbContext<IrminsulContext>(options =>
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("DefaultConnection")
+    ));
+
+// Application
 
 builder.Services.AddScoped<ICharacterRepository, CharacterRepository>();
 builder.Services.AddScoped<CharacterService>();
 
 builder.Services.AddApplicationValidation();
 
+// External Services
+
 builder.Services.AddHttpClient<IGenshinApiClient, GenshinApiClient>(client =>
 {
-    client.BaseAddress = new Uri("https://genshin-db-api.vercel.app/");
+    client.BaseAddress = new Uri(
+        "https://genshin-db-api.vercel.app/"
+    );
 });
 
+// OpenAPI
+
+builder.Services.AddOpenApi();
+
+
+// Build
 
 var app = builder.Build();
+
+
+// Middleware
+
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    //app.MapOpenApi();
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.MapOpenApi();
+    app.MapScalarApiReference();
 }
 
 app.UseHttpsRedirection();
