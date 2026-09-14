@@ -17,9 +17,14 @@ public class ExceptionHandlingMiddleware
         {
             await _next(context);
         }
-        catch (CharacterNotFoundException)
+        catch (CharacterNotFoundException ex)
         {
             context.Response.StatusCode = StatusCodes.Status404NotFound;
+            
+            await context.Response.WriteAsJsonAsync (new
+            {
+                message = ex.Message
+            });
 
         }
         catch (CharacterAlreadyExistsException ex)
@@ -34,6 +39,11 @@ public class ExceptionHandlingMiddleware
         catch (GenericException)
         {
             context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+
+            await context.Response.WriteAsJsonAsync(new
+            {
+                message = "Ocorreu um erro interno no servidor."
+            });
 
         }
     }
