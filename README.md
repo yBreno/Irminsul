@@ -135,46 +135,7 @@ backend/
 - **Irminsul.Infrastructure**: EF Core, DbContext, repositórios, migrations e integração externa.
 - **Irminsul.Tests**: testes automatizados da regra de aplicação.
 
-## Camadas
 
-### Domain
-
-Contém o núcleo do modelo de negócio, com destaque para a entidade `Character` e enums relacionados ao domínio de personagens.
-
-### Application
-
-Concentra:
-
-- `CharacterService`;
-- DTOs de entrada/saída;
-- interfaces (`ICharacterRepository`, `IGenshinApiClient`);
-- validações (FluentValidation);
-- exceções de negócio (ex.: não encontrado, duplicidade).
-
-### Infrastructure
-
-Responsável por:
-
-- `IrminsulContext` (DbContext);
-- mapeamento e persistência com EF Core;
-- configurações de entidades;
-- implementação de repositórios;
-- cliente HTTP da API externa;
-- migrations e manutenção do schema.
-
-### API
-
-Responsável por:
-
-- controllers e rotas REST;
-- middleware global (`ExceptionHandlingMiddleware`);
-- configuração da aplicação em `Program.cs`;
-- injeção de dependências;
-- OpenAPI (`AddOpenApi`, `MapOpenApi`) e Scalar (`MapScalarApiReference`).
-
-## Banco de dados
-
-O backend utiliza **SQL Server** com **Entity Framework Core** para persistência.
 
 ### Pontos principais
 
