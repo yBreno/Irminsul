@@ -20,14 +20,21 @@ public class ExceptionHandlingMiddleware
         catch (CharacterNotFoundException)
         {
             context.Response.StatusCode = StatusCodes.Status404NotFound;
+
         }
-        catch (CharacterAlreadyExistsException)
+        catch (CharacterAlreadyExistsException ex)
         {
             context.Response.StatusCode = StatusCodes.Status409Conflict;
+
+            await context.Response.WriteAsJsonAsync(new
+            {
+                message = ex.Message
+            });
         }
         catch (GenericException)
         {
             context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+
         }
     }
 }
