@@ -1,7 +1,6 @@
 ﻿using FluentValidation;
 using Irminsul.Application.DTos.Validators;
 using Microsoft.Extensions.DependencyInjection;
-using Irminsul.Application.DTos.Validators;
 
 namespace Irminsul.Api.Extensions;
 

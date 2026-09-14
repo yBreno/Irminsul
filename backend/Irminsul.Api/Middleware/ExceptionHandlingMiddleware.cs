@@ -46,5 +46,14 @@ public class ExceptionHandlingMiddleware
             });
 
         }
+        catch (Exception)
+        {
+            context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+
+            await context.Response.WriteAsJsonAsync(new
+            {
+                message = "Ocorreu um erro interno no servidor."
+            });
+        }
     }
 }
