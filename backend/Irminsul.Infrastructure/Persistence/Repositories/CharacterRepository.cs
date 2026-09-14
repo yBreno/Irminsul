@@ -56,5 +56,10 @@ namespace Irminsul.Infrastructure.Persistence.Repositories
 
             return existingCharacter!;
         }
+
+        public async Task<Character?> GetByNameAsync(string name)
+        {
+            return await _context.Characters.FirstOrDefaultAsync(c => c.Name == name);
+        }
     }
 }

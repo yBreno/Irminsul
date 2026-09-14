@@ -15,6 +15,10 @@ namespace Irminsul.Infrastructure.Persistence.Context
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(IrminsulContext).Assembly);
             base.OnModelCreating(modelBuilder);
+            
+            modelBuilder.Entity<Character>()
+                        .HasIndex(c => c.Name)
+                        .IsUnique();
         }
     }
 }

@@ -95,7 +95,19 @@ namespace Irminsul.Application.Services
         {
             var character = await GetCharacterFromExternalApiAsync(name);
 
+            var existingCharacter = await _characterRepository.GetByNameAsync(name);
+
+            if (existingCharacter != null)
+            {
+                throw new CharacterAlreadyExistsException();
+            }
+
             return await _characterRepository.AddAsync(character);
+        }
+
+        public async Task<Character?> GetCharacterByNameAsync(string name)
+        {
+            return await _characterRepository.GetByNameAsync(name);
         }
     }
 }
